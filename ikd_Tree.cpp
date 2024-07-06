@@ -1714,6 +1714,20 @@ bool KD_TREE<PointType>::point_cmp_y(PointType a, PointType b) { return a.y < b.
 template <typename PointType>
 bool KD_TREE<PointType>::point_cmp_z(PointType a, PointType b) { return a.z < b.z; }
 
+template <typename PointType>
+void KD_TREE<PointType>::reconstruct(PointVector point_cloud){
+    Delete_Storage_Disabled = true;
+    delete_tree_nodes(&Root_Node);
+    PointVector ().swap(PCL_Storage);
+    Rebuild_Logger.clear();           
+
+    if(Root_Node == nullptr){
+        Build(point_cloud);
+    } else {
+        Add_Points(point_cloud, true);
+    }
+}
+
 // Manual heap
 
 
